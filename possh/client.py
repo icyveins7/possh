@@ -1,8 +1,9 @@
 import socket
 import os
+from typing import Optional
 
 class Client:
-    def __init__(self, serverIp: str | None = None, serverPort: int = 56789):
+    def __init__(self, serverIp: Optional[str] = None, serverPort: int = 56789):
         """
         Instantiates the client for the possh server.
 
