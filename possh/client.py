@@ -24,10 +24,10 @@ class Client:
             The port number of the possh server. Defaults to 56789.
         """
         if serverIp is None:
-            serverIp, _, _ = self.getSshSource()
+            self._serverIp, _, _ = self.getSshSource()
         else:
-            self._serverPort = serverPort
-        self._serverIp = serverIp
+            self._serverIp = serverIp
+        self._serverPort = serverPort
 
     def getSshSource(self) -> tuple[str, int, int]:
         """
