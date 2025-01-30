@@ -66,4 +66,5 @@ class Client:
 if __name__ == '__main__':
     client = Client()
     print(client.getSshSource())
+    client.connect()
 

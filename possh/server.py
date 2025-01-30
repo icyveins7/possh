@@ -20,3 +20,7 @@ class Server:
                         break
                     conn.sendall(data)
 
+# ============= Developmental testing
+if __name__ == '__main__':
+    server = Server()
+    server.start()
