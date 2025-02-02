@@ -1,6 +1,7 @@
 import socket
 import os
 from typing import Optional
+import pickle as pkl
 
 class Client:
     def __init__(self, serverIp: Optional[str] = None, serverPort: int = 56789):
@@ -54,18 +55,51 @@ class Client:
         client_ip, client_port, server_port = ssh_client.split()
         return (client_ip, int(client_port), int(server_port))
 
-    def connect(self):
+    def connectAndSend(self, data: bytes):
+        """
+        Connect to the Server instance, send the data and disconnect.
+        This is probably the most used method.
+
+        Parameters
+        ----------
+        data : bytes
+            The data to send.
+        """
         # Start a simple client connection
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.connect((self._serverIp, self._serverPort))
-            s.sendall(b'hello')
-            data = s.recv(1024)
-            print('Received', repr(data))
+            s.sendall(data)
+
+    def serializePlotInstructions(self, key: str, *args, **kwargs) -> bytes:
+        """
+        Serializes a generic set of plot instructions using pickle.
+
+        This should be deserialized by the server based on the key supplied.
+
+        Parameters
+        ----------
+        key : str
+            Key for the server to handle the plot instruction.
+
+        *args
+            Arguments supplied with the plot instruction.
+
+        **kwargs
+            Keyword arguments supplied with the plot instruction.
+
+        Returns
+        -------
+        data : bytes
+            Pickled data to be sent.
+        """
+        return pkl.dumps((key, args, kwargs))
+
+# TODO: is there a better way other than to just instantiate here? feels unsafe..
+_client = Client()
 
 
 # ============= Some developmental testing
 if __name__ == '__main__':
-    client = Client()
-    print(client.getSshSource())
-    client.connect()
+    print(_client.getSshSource())
+    _client.connectAndSend(b'Test data')
 

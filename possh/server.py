@@ -1,4 +1,6 @@
 import socket
+import pickle as pkl
+# from .plotserver import figure, plot
 
 class Server:
     def __init__(self, startImmediately: bool=True, port: int=56789):
@@ -17,12 +19,26 @@ class Server:
                 conn, addr = s.accept()
                 with conn:
                     print('Connected by', addr)
+                    alldata = b''
                     while True:
                         data = conn.recv(1024)
                         if not data:
                             break
-                        conn.sendall(data)
+
+                        # Do simple concat for now
+                        alldata += data
+
+                    # Once complete, process the instructions
+                    print(alldata)
+                    plotInstructions = self._deserializePlotInstructions(data)
+                    print(plotInstructions)
+
+    def _deserializePlotInstructions(self, pkldata: bytes):
+        # Use pickle to get all args and kwargs
+        return pkl.loads(pkldata)
+
+_server = Server()
 
 # ============= Developmental testing
 if __name__ == '__main__':
-    server = Server()
+    pass
