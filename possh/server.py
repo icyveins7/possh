@@ -30,7 +30,7 @@ class Server:
 
                     # Once complete, process the instructions
                     print(alldata)
-                    plotInstructions = self._deserializePlotInstructions(data)
+                    plotInstructions = self._deserializePlotInstructions(alldata)
                     print(plotInstructions)
 
     def _deserializePlotInstructions(self, pkldata: bytes):
