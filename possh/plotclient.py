@@ -24,7 +24,9 @@ def show(*args, **kwargs):
 
 # ========== Dev testing
 if __name__ == '__main__':
+    import numpy as np
     figure()
     plot((1,2,3), (4,5,1))
+    plot(np.arange(100)*0.01, np.sin(np.arange(100)*0.01), 'rx-')
     show()
 
