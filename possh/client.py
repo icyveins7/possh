@@ -92,7 +92,9 @@ class Client:
         data : bytes
             Pickled data to be sent.
         """
-        return pkl.dumps((key, args, kwargs))
+        data = pkl.dumps((key, args, kwargs))
+        print(data)
+        return data
 
 # TODO: is there a better way other than to just instantiate here? feels unsafe..
 _client = Client()
