@@ -1,6 +1,6 @@
 import socket
 import pickle as pkl
-# from .plotserver import figure, plot
+from .director import _apidict
 
 class Server:
     def __init__(self, startImmediately: bool=True, port: int=56789):
@@ -31,7 +31,8 @@ class Server:
                     # Once complete, process the instructions
                     print(alldata)
                     plotInstructions = self._deserializePlotInstructions(alldata)
-                    print(plotInstructions)
+                    key, args, kwargs = plotInstructions
+                    _apidict[key](*args, **kwargs)
 
     def _deserializePlotInstructions(self, pkldata: bytes):
         # Use pickle to get all args and kwargs

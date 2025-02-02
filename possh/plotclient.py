@@ -15,6 +15,13 @@ def plot(*args, **kwargs):
         )
     )
 
+def show(*args, **kwargs):
+    _client.connectAndSend(
+        _client.serializePlotInstructions(
+            'pyplot.show', *args, **kwargs
+        )
+    )
+
 # ========== Dev testing
 if __name__ == '__main__':
     figure()
